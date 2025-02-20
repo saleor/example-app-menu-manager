@@ -16,6 +16,24 @@ query GetMenus($first: Int, $after: String, $sortBy: MenuSortingInput, $filter: 
           id
           name
           level
+          url
+          category {
+            id
+            name
+          }
+          collection {
+            id
+            name
+          }
+          page {
+            id
+            title
+          }
+          children {
+            id
+            name
+            level
+          }
         }
       }
     }
