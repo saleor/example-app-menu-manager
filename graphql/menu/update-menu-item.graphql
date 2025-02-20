@@ -1,0 +1,36 @@
+mutation UpdateMenuItem($id: ID!, $input: MenuItemInput!) {
+  menuItemUpdate(id: $id, input: $input) {
+    menuItem {
+      id
+      name
+      level
+      url
+      parent {
+        id
+        name
+      }
+      menu {
+        id
+        name
+        slug
+      }
+      category {
+        id
+        name
+      }
+      collection {
+        id
+        name
+      }
+      page {
+        id
+        title
+      }
+    }
+    errors {
+      field
+      message
+      code
+    }
+  }
+}

@@ -1,0 +1,10 @@
+query GetCollections($first: Int) {
+  collections(first: $first) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+  }
+}

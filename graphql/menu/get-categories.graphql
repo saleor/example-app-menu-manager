@@ -1,0 +1,10 @@
+query GetCategories($first: Int) {
+  categories(first: $first) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+  }
+}

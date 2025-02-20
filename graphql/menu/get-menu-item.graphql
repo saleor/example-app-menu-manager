@@ -1,0 +1,35 @@
+query GetMenuItem($id: ID!) {
+  menuItem(id: $id) {
+    id
+    name
+    level
+    url
+    parent {
+      id
+      name
+    }
+    menu {
+      id
+      name
+      slug
+    }
+    category {
+      id
+      name
+    }
+    collection {
+      id
+      name
+    }
+    page {
+      id
+      title
+    }
+    children {
+      id
+      name
+      level
+      url
+    }
+  }
+}

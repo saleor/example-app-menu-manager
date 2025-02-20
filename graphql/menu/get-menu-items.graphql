@@ -1,0 +1,46 @@
+query GetMenuItems(
+  $first: Int
+  $after: String
+  $sortBy: MenuItemSortingInput
+  $filter: MenuItemFilterInput
+) {
+  menuItems(first: $first, after: $after, sortBy: $sortBy, filter: $filter) {
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+    edges {
+      cursor
+      node {
+        id
+        name
+        level
+        url
+        parent {
+          id
+          name
+        }
+        menu {
+          id
+          name
+          slug
+        }
+        category {
+          id
+          name
+        }
+        collection {
+          id
+          name
+        }
+        page {
+          id
+          title
+        }
+      }
+    }
+    totalCount
+  }
+}

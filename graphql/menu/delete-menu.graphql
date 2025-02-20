@@ -1,0 +1,14 @@
+mutation DeleteMenu($id: ID!) {
+  menuDelete(id: $id) {
+    menu {
+      id
+      name
+      slug
+    }
+    errors {
+      field
+      message
+      code
+    }
+  }
+}

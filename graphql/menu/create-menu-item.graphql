@@ -1,0 +1,36 @@
+mutation CreateMenuItem($input: MenuItemCreateInput!) {
+  menuItemCreate(input: $input) {
+    menuItem {
+      id
+      name
+      level
+      url
+      parent {
+        id
+        name
+      }
+      menu {
+        id
+        name
+        slug
+      }
+      category {
+        id
+        name
+      }
+      collection {
+        id
+        name
+      }
+      page {
+        id
+        title
+      }
+    }
+    errors {
+      field
+      message
+      code
+    }
+  }
+}

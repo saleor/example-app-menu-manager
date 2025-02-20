@@ -1,0 +1,47 @@
+query GetMenu($id: ID, $name: String, $slug: String) {
+  menu(id: $id, name: $name, slug: $slug) {
+    id
+    name
+    slug
+    items {
+      id
+      name
+      level
+      url
+      parent {
+        id
+        name
+      }
+      category {
+        id
+        name
+      }
+      collection {
+        id
+        name
+      }
+      page {
+        id
+        title
+      }
+      children {
+        id
+        name
+        level
+        url
+        category {
+          id
+          name
+        }
+        collection {
+          id
+          name
+        }
+        page {
+          id
+          title
+        }
+      }
+    }
+  }
+}

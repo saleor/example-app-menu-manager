@@ -1,0 +1,22 @@
+mutation MoveMenuItem($menu: ID!, $moves: [MenuItemMoveInput!]!) {
+  menuItemMove(menu: $menu, moves: $moves) {
+    menu {
+      id
+      name
+      items {
+        id
+        name
+        level
+        parent {
+          id
+          name
+        }
+      }
+    }
+    errors {
+      field
+      message
+      code
+    }
+  }
+}

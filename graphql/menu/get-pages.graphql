@@ -1,0 +1,10 @@
+query GetPages($first: Int) {
+  pages(first: $first) {
+    edges {
+      node {
+        id
+        title
+      }
+    }
+  }
+}
