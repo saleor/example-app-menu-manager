@@ -144,7 +144,7 @@ export default function MenusPage() {
   }
 
   return (
-    <Box padding={6}>
+    <Box __maxWidth="640px" padding={6}>
       <Box marginBottom={8}>
         <Text fontWeight="bold" as="h1" size={11}>
           Example Menu Manager
@@ -295,8 +295,8 @@ export default function MenusPage() {
         {menus.map((menu) => (
           <Box key={menu.id} borderColor="default1" borderWidth={1} borderStyle="solid" padding={4}>
             <Box display="flex" justifyContent="space-between" marginBottom={4}>
-              <Text size={5} fontWeight="bold">
-                {menu.name}
+              <Text size={5}>
+                <b>{menu.name}</b> (id: {menu.id})
               </Text>
               <Button
                 icon={<TrashBinIcon />}
@@ -306,90 +306,116 @@ export default function MenusPage() {
                 Delete Menu
               </Button>
             </Box>
+            <Text size={3} fontWeight="bold">
+              Items
+            </Text>
             {menu.items && menu.items.length > 0 ? (
-              <Box display="grid" gap={2}>
-                {menu.items.map((item) => (
-                  <Box
-                    key={item.id}
-                    display="flex"
-                    gap={2}
-                    alignItems="center"
-                    paddingY={2}
-                    paddingX={4}
-                    borderColor="default1"
-                    borderWidth={1}
-                    borderStyle="solid"
-                  >
-                    <Box display="flex" gap={2} alignItems="center" width="100%">
-                      <Box>
+              <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                <thead>
+                  <tr>
+                    <th
+                      style={{
+                        textAlign: "left",
+                        padding: "8px",
+                        borderBottom: "1px solid var(--border-default1)",
+                      }}
+                    >
+                      ID
+                    </th>
+                    <th
+                      style={{
+                        textAlign: "left",
+                        padding: "8px",
+                        borderBottom: "1px solid var(--border-default1)",
+                      }}
+                    >
+                      <Text fontWeight="bold" as="span">
+                        Name
+                      </Text>
+                    </th>
+                    <th
+                      style={{
+                        textAlign: "left",
+                        padding: "8px",
+                        borderBottom: "1px solid var(--border-default1)",
+                      }}
+                    >
+                      <Text fontWeight="bold" as="span">
+                        Type
+                      </Text>
+                    </th>
+                    <th
+                      style={{
+                        textAlign: "left",
+                        padding: "8px",
+                        borderBottom: "1px solid var(--border-default1)",
+                      }}
+                    >
+                      <Text fontWeight="bold" as="span">
+                        Reference
+                      </Text>
+                    </th>
+                    <th
+                      style={{
+                        textAlign: "left",
+                        padding: "8px",
+                        borderBottom: "1px solid var(--border-default1)",
+                      }}
+                    >
+                      <Text fontWeight="bold" as="span">
+                        Level
+                      </Text>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {menu.items.map((item) => (
+                    <tr key={item.id}>
+                      <td
+                        style={{ padding: "8px", borderBottom: "1px solid var(--border-default1)" }}
+                      >
+                        <Text>{item.id}</Text>
+                      </td>
+                      <td
+                        style={{ padding: "8px", borderBottom: "1px solid var(--border-default1)" }}
+                      >
                         <Text>{item.name}</Text>
-                      </Box>
-                      <Box display="flex" gap={2} marginLeft="auto">
-                        {item.url && (
-                          <Box
-                            borderColor="default1"
-                            borderWidth={1}
-                            borderStyle="solid"
-                            paddingX={2}
-                            paddingY={1}
-                            borderRadius={2}
-                          >
-                            <Text size={2}>URL: {item.url}</Text>
-                          </Box>
-                        )}
-                        {item.category && (
-                          <Box
-                            borderColor="default1"
-                            borderWidth={1}
-                            borderStyle="solid"
-                            paddingX={2}
-                            paddingY={1}
-                            borderRadius={2}
-                          >
-                            <Text size={2}>Category: {item.category.name}</Text>
-                          </Box>
-                        )}
-                        {item.collection && (
-                          <Box
-                            borderColor="default1"
-                            borderWidth={1}
-                            borderStyle="solid"
-                            paddingX={2}
-                            paddingY={1}
-                            borderRadius={2}
-                          >
-                            <Text size={2}>Collection: {item.collection.name}</Text>
-                          </Box>
-                        )}
-                        {item.page && (
-                          <Box
-                            borderColor="default1"
-                            borderWidth={1}
-                            borderStyle="solid"
-                            paddingX={2}
-                            paddingY={1}
-                            borderRadius={2}
-                          >
-                            <Text size={2}>Page: {item.page.title}</Text>
-                          </Box>
-                        )}
-                        {item.level > 0 && (
-                          <Box
-                            borderColor="default1"
-                            borderWidth={1}
-                            borderStyle="solid"
-                            paddingX={2}
-                            paddingY={1}
-                            borderRadius={2}
-                          >
-                            <Text size={2}>Level: {item.level}</Text>
-                          </Box>
-                        )}
-                      </Box>
-                    </Box>
-                  </Box>
-                ))}
-              </Box>
+                      </td>
+                      <td
+                        style={{ padding: "8px", borderBottom: "1px solid var(--border-default1)" }}
+                      >
+                        <Text>
+                          {item.category
+                            ? "Category"
+                            : item.collection
+                            ? "Collection"
+                            : item.page
+                            ? "Page"
+                            : item.url
+                            ? "URL"
+                            : ""}
+                        </Text>
+                      </td>
+                      <td
+                        style={{ padding: "8px", borderBottom: "1px solid var(--border-default1)" }}
+                      >
+                        <Text>
+                          {item.category?.name ||
+                            item.collection?.name ||
+                            item.page?.title ||
+                            item.url ||
+                            ""}
+                        </Text>
+                      </td>
+                      <td
+                        style={{ padding: "8px", borderBottom: "1px solid var(--border-default1)" }}
+                      >
+                        <Text>{item.level || 0}</Text>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             ) : (
               <Text color="default1">No items in this menu</Text>
             )}
