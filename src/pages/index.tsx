@@ -33,6 +33,50 @@ interface MenuItemForm {
   pageId?: SelectOption | null;
 }
 
+const MenuItemRow = ({ item, depth = 0 }: { item: any; depth?: number }) => {
+  const indentPadding = depth * 20; // 20px indent per level
+
+  return (
+    <>
+      <tr key={item.id}>
+        <td style={{ padding: "8px", borderBottom: "1px solid var(--border-default1)" }}>
+          <Text>{item.id}</Text>
+        </td>
+        <td style={{ padding: "8px", borderBottom: "1px solid var(--border-default1)" }}>
+          <Box style={{ paddingLeft: `${indentPadding}px` }}>
+            {depth > 0 && "└─ "}
+            <Text>{item.name}</Text>
+          </Box>
+        </td>
+        <td style={{ padding: "8px", borderBottom: "1px solid var(--border-default1)" }}>
+          <Text>
+            {item.category
+              ? "Category"
+              : item.collection
+              ? "Collection"
+              : item.page
+              ? "Page"
+              : item.url
+              ? "URL"
+              : ""}
+          </Text>
+        </td>
+        <td style={{ padding: "8px", borderBottom: "1px solid var(--border-default1)" }}>
+          <Text>
+            {item.category?.name || item.collection?.name || item.page?.title || item.url || ""}
+          </Text>
+        </td>
+        <td style={{ padding: "8px", borderBottom: "1px solid var(--border-default1)" }}>
+          <Text>{item.level || 0}</Text>
+        </td>
+      </tr>
+      {item.children?.map((child: any) => (
+        <MenuItemRow key={child.id} item={child} depth={depth + 1} />
+      ))}
+    </>
+  );
+};
+
 export default function MenusPage() {
   const [error, setError] = useState<string | null>(null);
   const [newMenu, setNewMenu] = useState({ name: "", slug: "" });
@@ -320,7 +364,9 @@ export default function MenusPage() {
                         borderBottom: "1px solid var(--border-default1)",
                       }}
                     >
-                      ID
+                      <Text fontWeight="bold" as="span">
+                        ID
+                      </Text>
                     </th>
                     <th
                       style={{
@@ -370,49 +416,7 @@ export default function MenusPage() {
                 </thead>
                 <tbody>
                   {menu.items.map((item) => (
-                    <tr key={item.id}>
-                      <td
-                        style={{ padding: "8px", borderBottom: "1px solid var(--border-default1)" }}
-                      >
-                        <Text>{item.id}</Text>
-                      </td>
-                      <td
-                        style={{ padding: "8px", borderBottom: "1px solid var(--border-default1)" }}
-                      >
-                        <Text>{item.name}</Text>
-                      </td>
-                      <td
-                        style={{ padding: "8px", borderBottom: "1px solid var(--border-default1)" }}
-                      >
-                        <Text>
-                          {item.category
-                            ? "Category"
-                            : item.collection
-                            ? "Collection"
-                            : item.page
-                            ? "Page"
-                            : item.url
-                            ? "URL"
-                            : ""}
-                        </Text>
-                      </td>
-                      <td
-                        style={{ padding: "8px", borderBottom: "1px solid var(--border-default1)" }}
-                      >
-                        <Text>
-                          {item.category?.name ||
-                            item.collection?.name ||
-                            item.page?.title ||
-                            item.url ||
-                            ""}
-                        </Text>
-                      </td>
-                      <td
-                        style={{ padding: "8px", borderBottom: "1px solid var(--border-default1)" }}
-                      >
-                        <Text>{item.level || 0}</Text>
-                      </td>
-                    </tr>
+                    <MenuItemRow key={item.id} item={item} />
                   ))}
                 </tbody>
               </table>
