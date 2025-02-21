@@ -194,12 +194,14 @@ const MenuForm = ({ initialMenu, onSubmit, onClose }: MenuFormProps) => {
               label="Item name"
               required
             />
-            <Select
-              options={getAvailableParentItems(index)}
-              value={item.parentId || null}
-              onChange={(value) => updateMenuItem(index, { parentId: value as SelectOption })}
-              label="Parent Item"
-            />
+            {initialMenu && (
+              <Select
+                options={getAvailableParentItems(index)}
+                value={item.parentId || null}
+                onChange={(value) => updateMenuItem(index, { parentId: value as SelectOption })}
+                label="Parent Item"
+              />
+            )}
             <Select
               options={categories.map((cat) => ({
                 value: cat.id,
@@ -272,7 +274,7 @@ export default function MenusPage() {
 
   const handleCreateMenu = async (menuData: any) => {
     try {
-      // Remove id field from items for menu creation
+      // Remove id field and parent references for menu creation
       const input = {
         name: menuData.name,
         slug: menuData.slug,
@@ -281,7 +283,6 @@ export default function MenusPage() {
           category: item.category,
           collection: item.collection,
           page: item.page,
-          parent: item.parent,
         })),
       };
 
